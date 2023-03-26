@@ -18,5 +18,9 @@
 
 *.zip
 *.tar
+*.tar.gz
 
 *.txt
+*.de
+*.en
+*.fr
