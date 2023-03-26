@@ -31,13 +31,13 @@ python train.py
 
 #### Scaled Dot-Product Attention
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261428489.png" alt="image-20230326142849456" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261428489.png" alt="image-20230326142849456" style="zoom:20%;" />
 
 常用的注意力评分函数包括2种：加性注意力、乘性注意力两种。
 
 - 加性注意力：
 
-    <img src="https://my-picture-1311448338.file.myqcloud.com/img/202303262108566.png" alt="image-20230326210832492" style="zoom: 67%;" />
+    <img src="https://my-picture-1311448338.file.myqcloud.com/img/202303262108566.png" alt="image-20230326210832492" style="zoom: 20%;" />
 
     Query和Key不要求等长，`W_q`、`W_k`和`w_v`都是可学习的参数。
 
@@ -49,7 +49,7 @@ python train.py
 
 缩放点积注意力的架构设计和代码实现如下：
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261428363.png" alt="image-20230326142825256" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261428363.png" alt="image-20230326142825256" style="zoom:20%;" />
 
 ```python
 class ScaleDotProductionAttention(nn.Module):
@@ -78,13 +78,13 @@ class ScaleDotProductionAttention(nn.Module):
 
 #### Multi-Head Attention
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261431183.png" alt="image-20230326143107141" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261431183.png" alt="image-20230326143107141" style="zoom:20%;" />
 
 CNN的一个优点在于卷积核的不同层可以提取相同像素区域的不同语义信息。原文使用多头注意力机制以追求类似的效果，即通过不同的线性投影从多个角度来观察Query、Key、Value，从而得到多种信息的组合。同时，为了保证计算开销不会因为头数`h`而大量提升，每个头的输入只包含原本的`d_model`维的`1/h`维。
 
 多头注意力的架构设计和代码实现如下：
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261430184.png" alt="image-20230326143041132" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261430184.png" alt="image-20230326143041132" style="zoom:20%;" />
 
 ```python
 class MultiHeadAttention(nn.Module):
@@ -127,7 +127,7 @@ class MultiHeadAttention(nn.Module):
 
 #### Position-wise Feed-Forward Network
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261455348.png" alt="image-20230326145519301" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261455348.png" alt="image-20230326145519301" style="zoom:20%;" />
 
 一个单层MLP。
 
@@ -174,7 +174,7 @@ class LayerNorm(nn.Module):
 
 #### Token Embedding
 
-<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20230326154803021.png" alt="image-20230326154803021" style="zoom:50%;" />
+<img src="C:/Users/lrk/AppData/Roaming/Typora/typora-user-images/image-20230326154803021.png" alt="image-20230326154803021" style="zoom:20%;" />
 
 由于文本需要映射为数字才能被处理，因此文本内容的 Tokenization（标识化）和Embedding是NLP任务的必要内容，而对于CV或时序数据处理的任务则没有这个需要，因为本来就是数字。Tokenize是把一句话划分为单个词语（token），这个过程中句子长度不同时，用padding来补足（attention需要把这些padding给mask掉）。Embedding是维护并训练一个查找表，要通过训练能把意思相近的token映射为相似的数值。
 
@@ -193,7 +193,7 @@ class TokenEmbedding(nn.Module):
 
 #### Positional Embedding
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261547683.png" alt="image-20230326154748642" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261547683.png" alt="image-20230326154748642" style="zoom:20%;" />
 
 单纯的self-attention虽然能够一次看到所有的历史数据（key-value），但是却无法得知“时序”或“顺序”这一信息，因此对输入数据的前后位置信息进行编码并加入到输入中，保证Transformer有时序信息帮助判断。一个良好的位置编码方案要做到：
 
@@ -206,7 +206,7 @@ class TokenEmbedding(nn.Module):
 
 位置编码的效果和代码实现如下：
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303262147964.png" alt="image-20230326214750893" style="zoom: 33%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303262147964.png" alt="image-20230326214750893" style="zoom: 5%;" />
 
 ```python
 class PositionalEmbedding(nn.Module):
@@ -238,7 +238,7 @@ class PositionalEmbedding(nn.Module):
 
 编码器部分由多个block组成，每个block包含两个子层：多头自注意力层和位置前向传播层。
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261555643.png" alt="image-20230326155520599" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261555643.png" alt="image-20230326155520599" style="zoom:20%;" />
 
 ```python
 class EncoderBlock(nn.Module):
@@ -275,7 +275,7 @@ class EncoderBlock(nn.Module):
 
 解码器部分由多个block组成，每个block包含三个子层：多头自注意力层、编码信息注意力层和位置前向传播层。
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261555723.png" alt="image-20230326155552681" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261555723.png" alt="image-20230326155552681" style="zoom:20%;" />
 
 ```python
 class DecoderBlock(nn.Module):
@@ -323,7 +323,7 @@ class DecoderBlock(nn.Module):
 
 整个架构分为编码器和解码器，编解码器的输入都是经过mask的数据（或者都包含mask信息）。并且解码器最后有一个Linear层完成隐向量向词向量的映射。
 
-<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261634975.png" alt="image-20230326163411902" style="zoom:50%;" />
+<img src="https://my-picture-1311448338.file.myqcloud.com/img/202303261634975.png" alt="image-20230326163411902" style="zoom:20%;" />
 
 ```python
 class Encoder(nn.Module):
