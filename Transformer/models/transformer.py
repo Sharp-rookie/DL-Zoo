@@ -121,7 +121,7 @@ class Transformer(nn.Module):
 
         in_mask = self.mutual_mask(x_in, x_in, self.pad_idxes[0], self.pad_idxes[0])
         in_out_mask =  self.mutual_mask(x_in, x_out, self.pad_idxes[0], self.pad_idxes[1])
-        out_mask = self.mutual_mask(x_out, x_out, self.pad_idxes[1], self.pad_idxes[1]) & self.no_peak_mask(x_out, x_out)
+        out_mask = self.mutual_mask(x_out, x_out, self.pad_idxes[1], self.pad_idxes[1]) & self.no_peek_mask(x_out, x_out)
 
         x_in_out = self.encoder(x_in, in_mask)
         x_out = self.decoder(x_out, x_in_out, out_mask, in_out_mask)
@@ -140,13 +140,13 @@ class Transformer(nn.Module):
         
         return mask
     
-    def no_peak_mask(self, q, k):
+    def no_peek_mask(self, q, k):
         """
-        Mask the upper half of the dot product matrix in self attention to prevent flow of information from future tokens.
+        Mask the down half of the attention matrix to prevent peeking into the future (information from future tokens).
         """
         
         len_q = q.size(1)
         len_k = k.size(1)
-        mask = torch.triu(torch.ones((len_q, len_k)), diagonal=1).bool().to(q.device)
+        mask = torch.tril(torch.ones(len_q, len_k)).type(torch.BoolTensor).to(q.device)
         
         return mask
